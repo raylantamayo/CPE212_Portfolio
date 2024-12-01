@@ -25,13 +25,13 @@
 
     - name: Copy Dockerfile to the remote host
       copy:
-        src: Dockerfile
-        dest: /home/raylantamayo/dockerfile
+        src: dockerfile
+        dest: /home/tamayo/dockerfile
 
     - name: copy static web page app files to remote hosts
       copy:
         src: ./docker-web-app/
-        dest: /home/raylantamayo/docker-web-app/
+        dest: /home/tamayo/docker-web-app/
         remote_src: no
 
     - name: Build Docker Image
