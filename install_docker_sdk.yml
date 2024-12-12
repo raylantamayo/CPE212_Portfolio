@@ -1,0 +1,49 @@
+- name: Install Docker and Docker SDK for Python
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install pip on ubuntu
+      apt:
+        name: python3-pip
+        state: present
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Install pip on centOS
+      yum:
+        name: python3-pip
+        state: present
+        update_cache: yes
+      when: ansible_distribution == "CentOS"
+
+    - name: Ensure Docker SDK for python is installed
+      pip:
+        name: docker
+        state: present
+        executable: pip3
+
+    - name: Install Docker (Ubuntu)
+      apt:
+        name: docker.io
+        state: present
+      when: ansible_distribution == "Ubuntu"
+      become: true
+
+
+    - name: Install Epel repository (Centos)
+      yum:
+        name: epel-release
+        state: present
+      when: ansible_distribution == "CentOS"
+
+    - name: Install docker.io packages (Centos)
+      yum:
+        name: docker.io
+        state: present
+      when: ansible_distribution == "CentOS"
+
+    - name: Start and Enable Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes

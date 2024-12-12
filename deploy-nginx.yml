@@ -1,0 +1,16 @@
+---
+- name: Configure Nginx Server
+  hosts: all
+  become: true
+  tasks:
+
+    - name: Ensure that /etc/ngix/conf.d exists
+      file:
+        path: /etc/nginx/conf.d
+        state: directory
+
+
+    - name: Copy nginx default.conf
+      template:
+        src: default.conf.j2
+        dest: /etc/nginx/conf.d/default.conf
